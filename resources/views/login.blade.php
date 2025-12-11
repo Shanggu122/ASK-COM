@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ASCC-IT Login</title>
+  <title>ASK-COM Login</title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="{{ asset('css/login.css') }}">
   <link rel="stylesheet" href="{{ asset('css/toast.css') }}">
@@ -11,21 +11,18 @@
 <body>
   <div class="container">
     <div class="left-panel">
-      <img src="{{ asset('images/CCIT_logo2.png') }}" alt="Adamson Logo" class="left-logo"/>
+      <img src="{{ asset('images/Comsci.png') }}" alt="ComSci Logo" class="left-logo"/>
       <h2 class="college-title">
-        <div class="adamson-uni">Adamson University</div>
-        <div class="college-bottom">College of Computing and Information Technology</div>
+        <div class="adamson-uni">Computer Science Department</div>
       </h2>
     </div>
 
     <div class="right-panel">
       <div class="brand">
-        <img src="{{ asset('images/ASCCITlogo.png') }}" alt="ASCC-IT Logo" class="small-logo">
-        <h1>ASCC-IT</h1>
+        <img src="{{ asset('images/ASCCITlogo.png') }}" alt="ASK-COM Logo" class="small-logo">
+        <h1>ASK-COM</h1>
       </div>
-      <p class="brand-slogan">
-        <em><b>C</b>atalyzing <b>C</b>hange <b>I</b>nnovating for <b>T</b>omorrow</em>
-      </p>
+      <p class="brand-slogan">Sign in to your account</p>
       <form action="{{ route('login.submit') }}" method="post" id="unified-login-form" autocomplete="on">
         @csrf
         <div class="input-group float-stack">

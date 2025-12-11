@@ -11,10 +11,9 @@
   <div class="container">
     <!-- Left Panel -->
     <div class="left-panel">
-      <img src="{{ asset('images/CCIT_logo2.png') }}" alt="Adamson Logo" class="left-logo"/>
+      <img src="{{ asset('images/Comsci.png') }}" alt="ComSci Logo" class="left-logo"/>
       <h2 class="college-title">
-        <div class="adamson-uni">Adamson University</div>
-        <div class="college-bottom">College of Computing and Information Technology</div>
+        <div class="adamson-uni">Computer Science Department</div>
       </h2>
     </div>
 

@@ -32,7 +32,7 @@
         
          <ul>
           <li><a href="{{ url('/dashboard-professor') }}">Dashboard</a></li>
-          <li><a href="{{ url('/comsci-professor') }}">Computer Science</a></li>
+          <li><a href="{{ url('/comsci-professor') }}">Faculty</a></li>
           <li><a href="{{ url('/profile-professor') }}">Profile</a></li>
           <li><a href="{{ url('/conlog-professor') }}">Consultation Log</a></li>
           <li><a href="{{ url('/messages-professor') }}">Messages</a></li>
