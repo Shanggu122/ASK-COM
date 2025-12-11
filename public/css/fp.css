@@ -102,8 +102,9 @@ body {
 }
 
 .left-panel h2 {
-    font-size: 1.2rem;
-    color: #003d29;
+    font-size: 1.6rem;
+    color: #ffffff;
+    font-weight: 900;
 }
 
 .right-panel {
