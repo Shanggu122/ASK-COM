@@ -1478,6 +1478,10 @@ Route::middleware([\App\Http\Middleware\EnsureAdminAuthenticated::class])->group
         \App\Http\Controllers\AdminSubjectController::class,
         "index",
     ])->name("admin.subjects.index");
+    Route::post("/admin/subjects", [
+        \App\Http\Controllers\AdminSubjectController::class,
+        "store",
+    ])->name("admin.subjects.store");
     Route::delete("/admin/subjects/{subject}", [
         \App\Http\Controllers\AdminSubjectController::class,
         "destroy",
