@@ -1,0 +1,399 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Match login page subtle gradient */
+    background: linear-gradient(180deg, #e5e6e5 0%, #f3f5f4 60%, #f2f4f3 100%);
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1100px;
+    height: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Light gradient background for left panel */
+/* Dark green gradient background for left panel */
+.left-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #12372a 0%, #20543d 50%, #2d6e4e 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    min-height: 550px; /* Increase left panel height */
+}
+
+.left-logo {
+    width: 340px;
+    max-width: 100%;
+    margin-bottom: 2.2rem;
+    margin-top: -1.5rem;
+}
+
+.left-panel h2 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 400;
+}
+
+.right-panel {
+    flex: 1;
+    background: #ffffff;
+    padding: 1.2rem 3rem 3rem 1.5rem; /* less top/left padding for flush effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 550px; /* Adjust right panel height */
+}
+
+.brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 0.5rem; /* less space, so slogan is closer */
+    margin-top: 10px;
+    text-align: left;
+}
+
+.small-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 0;
+    align-self: flex-start;
+}
+
+.brand h1 {
+    color: #0b3d2e;
+    font-weight: 800;
+    font-size: 1.5rem; /* smaller font size */
+    margin-bottom: 0;
+    margin-left: 0.7rem;
+}
+
+.brand-slogan {
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-top: 3.5rem; /* Increased space above */
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.input-group {
+    margin-bottom: 0.8rem;
+    position: relative;
+    max-width: 350px; /* Set max width */
+    width: 100%;
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto;
+    margin-top: 1rem; /* Reduced spacing above */
+}
+
+.input-group input {
+    width: 100%; /* Fill the group */
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 16px; /* Increased border radius */
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #0b3d2e;
+    outline: none;
+}
+
+/* Highlight invalid input without moving layout */
+.input-group input.input-invalid {
+    border-color: #dc3545 !important;
+}
+
+/* Success message coloring for fixed-position message slot */
+.field-ok {
+    color: #1e8f5a;
+}
+.field-error.field-ok {
+    color: #1e8f5a;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #777;
+}
+
+/* Reserve space under groups that show absolute-positioned messages */
+.input-group.with-error-space {
+    padding-bottom: 28px;
+}
+@media (max-width: 480px) {
+    .input-group.with-error-space {
+        padding-bottom: 32px;
+    }
+}
+
+.options {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.options a {
+    color: #0b3d2e;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-btn {
+    width: 100%;
+    max-width: 350px; /* Match input width */
+    background-color: #0b3d2e;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 16px; /* Increased border radius */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-btn:hover {
+    background-color: #105943;
+}
+
+.options-row {
+    max-width: 350px; /* Match input and button width */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: flex-end; /* Align content to the right */
+    margin-bottom: 1rem;
+    margin-top: 10px;
+}
+
+.login-error {
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    padding-left: 8px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+}
+
+/* Field level validation error (inline, preserves layout) */
+.field-error {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 4px;
+    font-weight: 500;
+    width: 100%;
+    text-align: left;
+    padding-left: 4px;
+    min-height: 12px; /* smaller reserved space */
+    transition: opacity 0.32s ease;
+}
+.field-error.hidden {
+    visibility: hidden;
+}
+
+.fade-out-field-error,
+.fade-out-login-error {
+    opacity: 0;
+}
+
+/* Add this to push the form down if needed */
+.right-panel form {
+    margin-top: 2rem; /* slightly closer to header */
+    width: 100%;
+}
+
+.fp-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the whole header horizontally */
+    margin-bottom: 2.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    position: relative;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #0b3d2e;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    text-decoration: none;
+    transition:
+        background 0.2s,
+        box-shadow 0.2s;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+    user-select: none;
+    touch-action: manipulation;
+    line-height: 1;
+}
+
+.back-btn:hover {
+    background: #105943;
+}
+.back-btn:active {
+    background: #094130;
+}
+.back-btn:focus-visible {
+    outline: 3px solid #36b58b;
+    outline-offset: 2px;
+}
+
+.fp-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #7a9692;
+    letter-spacing: 1px;
+    text-align: center;
+    flex: 1;
+    margin-left: -45px; /* Move the title slightly to the left */
+}
+
+.fp-instruction {
+    font-size: 1.1rem;
+    color: #0b3d2e;
+    font-weight: 700;
+    margin-top: 1.5rem; /* Increased top margin to bring it down */
+    margin-bottom: 2rem;
+    text-align: center; /* Center the instruction text */
+    font-family: 'Segoe UI', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .container {
+        flex-direction: column;
+        width: 95vw;
+        max-width: 430px;
+        min-height: 120vh; /* Make container longer for scrolling */
+        height: auto;
+        margin: 2.5rem auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background: #fff;
+
+        padding-bottom: 2rem;
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%;
+        max-width: 100%;
+        min-height: 400px; /* Increase min-height for longer panels */
+        box-sizing: border-box;
+        padding: 2rem 1rem;
+    }
+
+    .left-panel {
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 1rem;
+    }
+
+    .right-panel {
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .brand,
+    .brand-slogan,
+    form {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .input-group,
+    .login-btn,
+    .options-row {
+        max-width: 260px; /* Make input and button smaller */
+        width: 100%;
+    }
+
+    .input-group input {
+        font-size: 15px;
+        padding: 10px 12px;
+    }
+
+    .login-btn {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .options-row {
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+        margin-top: 5px;
+    }
+
+    .brand {
+        margin-bottom: 0.5rem;
+    }
+
+    .small-logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .brand h1 {
+        font-size: 1.3rem;
+        margin-left: 0.6rem;
+    }
+
+    .options-row a {
+        font-size: 12px; /* Make the option font smaller on mobile */
+    }
+}

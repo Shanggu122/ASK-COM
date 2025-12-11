@@ -1,0 +1,13 @@
+providers = ["php"]
+
+[phases.setup]
+nixPkgs = ["php82", "php82Packages.composer"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader"]
+
+[phases.build]
+cmds = ["php artisan config:cache", "php artisan view:cache"]
+
+[start]
+cmd = "chmod -R 755 storage && rm -rf public/storage && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=$PORT"

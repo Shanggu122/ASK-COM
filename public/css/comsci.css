@@ -1,0 +1,1253 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #e5f0ed;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 {
+    font-size: 2rem;
+    color: #12372a;
+}
+/* Small italic subtitle for view-only context */
+.subtitle-view-only {
+    color: #234;
+    opacity: 0.75;
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* Search */
+.search-container {
+    margin: 1rem 0;
+}
+.search-container input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* Profile Card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    max-width: 300px;
+    min-height: 100px; /* match IT&IS card height for consistent boxes */
+    cursor: pointer;
+}
+/* Make cards non-clickable on view-only pages */
+.view-only .profile-card {
+    cursor: default !important;
+    pointer-events: none;
+}
+.profile-card img {
+    width: clamp(60px, 8vw, 78px);
+    height: clamp(60px, 8vw, 78px);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 16px rgba(18, 55, 42, 0.18);
+    background: #f0f5f3;
+}
+
+/* Leave Day (professor-specific) visuals for calendar on ComSci booking modal */
+.ov-leave {
+    background: #12a39b !important;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+}
+/* Restore teal on the button for Leave */
+.day-leave {
+    background: rgba(18, 163, 155, 0.55) !important;
+}
+/* Keep Leave tint when disabled (similar to Online Day rules) */
+.is-disabled .pika-button.day-leave {
+    background: rgba(18, 163, 155, 0.55) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+/* Ensure tint wins over availability/hover like Online Day */
+.pika-button.day-leave,
+.slot-free .pika-button.day-leave,
+.slot-low .pika-button.day-leave,
+.slot-full .pika-button.day-leave,
+.pika-button.day-leave:hover,
+.slot-free .pika-button.day-leave:hover,
+.slot-low .pika-button.day-leave:hover,
+.slot-full .pika-button.day-leave:hover {
+    background: rgba(18, 163, 155, 0.65) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+/* Persist Leave tint even when day is disabled by overrides */
+.is-disabled .pika-button.day-leave {
+    background: rgba(14, 165, 164, 0.55) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+/* Full-cell tint for Leave Day on ComSci booking calendar */
+/* Remove big box: clear the full-cell tint for Leave */
+.pika-table td.day-leave-td {
+    background: transparent !important;
+}
+.profile-name {
+    font-weight: 600;
+    color: #12372a;
+    font-size: 1rem; /* match admin */
+}
+
+/* Chat Button */
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 32px;
+    background-color: #12372a;
+    color: white;
+    border: none;
+    padding: 1rem 1.2rem;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    /* Place below navbar/sidebar overlay on mobile (match student dashboard) */
+    z-index: 800;
+}
+.chat-button i {
+    font-size: 1.2rem;
+}
+/* Chat Overlay */
+.chat-overlay {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    /* Render behind sidebar (z-index:1000) and its overlay (z-index:900) */
+    z-index: 800;
+    transition:
+        right 0.3s ease,
+        transform 0.3s ease;
+    border-left: 3px solid #12372a;
+    transform: translateX(0);
+}
+.chat-overlay.open {
+    right: 0;
+}
+.chat-overlay .chat-header {
+    background-color: #12372a;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+.chat-overlay .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+.chat-overlay .chat-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 10px;
+    border-top: 1px solid #ddd;
+    background: #fff;
+}
+.quick-reply {
+    background: #12372a;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    line-height: 1.2;
+    transition: background 0.25s;
+}
+.quick-reply:hover {
+    background: #0e4e23;
+}
+.quick-replies-toggle {
+    position: absolute;
+    bottom: 85px;
+    right: 14px;
+    background: #12372a;
+    color: #fff;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: background 0.25s;
+    font-size: 20px;
+}
+.quick-replies-toggle:hover {
+    background: #0e4e23;
+}
+.chat-overlay .message.bot {
+    margin: 0.5rem 0;
+    padding: 0.6rem;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 14px;
+    background-color: #e0f2f1;
+    align-self: flex-start;
+}
+
+#chatForm {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+    background-color: #ffffff;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#chatForm input[type='text'] {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+#chatForm button {
+    background-color: #12372a;
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#chatForm button:hover {
+    background-color: #0e4e23;
+}
+
+@media (max-width: 450px) {
+    .chat-overlay {
+        width: 92vw;
+        max-width: 360px;
+        right: 0;
+        transform: translateX(104%);
+        border-left-width: 0;
+        border-radius: 18px 0 0 18px;
+    }
+
+    .chat-overlay.open {
+        transform: translateX(0);
+    }
+
+    #chatForm {
+        padding: 0.75rem 0.75rem 0.85rem;
+        gap: 0.45rem;
+    }
+
+    #chatForm input[type='text'] {
+        padding: 0.55rem 0.65rem;
+        font-size: 13px;
+        margin-right: 0;
+    }
+
+    #chatForm button {
+        padding: 0.55rem 0.75rem;
+        font-size: 13px;
+        min-width: 64px;
+        white-space: nowrap;
+        margin-left: 0;
+    }
+
+    .quick-replies {
+        padding: 6px 8px;
+        gap: 4px;
+    }
+
+    .quick-reply {
+        font-size: 11px;
+        padding: 5px 9px;
+    }
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: #d0e6ff;
+    color: #000;
+    padding: 0.6rem 0.8rem;
+    margin: 0.5rem 0;
+    margin-right: 0.5rem;
+    border-radius: 12px;
+    border-bottom-right-radius: 0px;
+    max-width: 80%;
+    font-size: 14px;
+    text-align: left;
+    display: inline-block;
+}
+
+/* Profile Overlay */
+.profile-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 400px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.profile-overlay.open {
+    right: 0;
+}
+.profile-header {
+    position: relative;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+.profile-header h2 {
+    color: #12372a;
+    margin-bottom: 0.2rem;
+}
+.profile-header p {
+    margin: 0.5rem 0;
+}
+.profile-header .close-profile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #12372a;
+}
+
+/* Profile Body */
+.profile-body .checkboxes label {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 14px;
+}
+.profile-body .calendar-sample {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.profile-body .consult-mode {
+    margin: 1rem 0;
+}
+.profile-body textarea {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    font-size: 14px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 220px; /* make room for sidebar */
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: flex-end;
+    z-index: 10000; /* Higher than navbar (1000) */
+    backdrop-filter: blur(3px);
+    pointer-events: auto; /* Blocks all clicks */
+}
+
+/* Modal Content */
+.modal-content {
+    background: #fff;
+    width: 1200px;
+    height: 100vh;
+    border-radius: 0px;
+    padding: 32px;
+    overflow-y: auto;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    color: #093b2f;
+    gap: 47px;
+    overflow: hidden;
+    z-index: 10001; /* Higher than overlay (10000) */
+    position: relative;
+}
+
+/* Header Section */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.profile-section {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex: 1;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    background: #e5f0ed;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    object-position: center;
+    border: 4px solid #ffffff;
+    box-shadow: 0 10px 28px rgba(18, 55, 42, 0.22);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #093b2f;
+}
+
+.profile-section p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.profile-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* match admin */
+    gap: 32px;
+    margin-top: 2rem;
+    max-width: 1300px; /* match admin */
+    flex-direction: column;
+}
+.profile-card {
+    max-width: 300px;
+}
+@media (max-width: 1100px) {
+    .profile-cards-grid {
+        gap: 28px;
+    }
+}
+@media (max-width: 900px) {
+    .profile-cards-grid {
+        gap: 24px;
+    }
+}
+@media (max-width: 768px) {
+    .profile-cards-grid {
+        display: flex;
+        grid-template-columns: repeat(4, 1fr);
+        flex-direction: column;
+        padding-bottom: 6rem;
+    }
+    .profile-card {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    .profile-name {
+        font-size: 1rem;
+    }
+}
+
+/* No colleagues message */
+.no-colleagues {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #12372a;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.no-colleagues p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* No results message (match student pages) */
+.no-results-message {
+    display: none;
+    margin-top: 12px;
+    color: #b00020;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.modal-header select {
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-right: 60px;
+    margin-top: 30px; /* move dropdown downward */
+}
+/* Lightweight custom dropdown (mobile) */
+.cs-dd {
+    position: relative;
+    width: 100%;
+    margin-top: 12px;
+}
+.cs-dd-trigger {
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-left: 3px solid #093b2f;
+    border-radius: 6px;
+    background: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+.cs-dd-trigger {
+    position: relative;
+    padding-right: 34px;
+}
+.cs-dd-trigger:after {
+    content: '\25BE';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+.cs-dd.open .cs-dd-trigger:after {
+    content: '\25B4';
+}
+.cs-dd-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-left: 3px solid #093b2f;
+    border-top: none;
+    max-height: 230px;
+    overflow-y: auto;
+    display: none;
+    z-index: 3000;
+}
+.cs-dd.open .cs-dd-list {
+    display: block;
+}
+.cs-dd-list li {
+    padding: 10px 18px;
+    cursor: pointer;
+}
+.cs-dd-list li:hover,
+.cs-dd-list li.active {
+    background: #e5f0ed;
+}
+@media (max-width: 768px) {
+    #modalSubjectSelect {
+        display: none;
+    }
+    #csSubjectDropdown {
+        display: block !important;
+    }
+}
+
+/* Checkboxes */
+.checkbox-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.checkbox-section label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-section input[type='checkbox'] {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* Calendar Layout Wrapper */
+.flex-layout {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Calendar */
+.calendar-wrapper-container {
+    flex: 1;
+    min-width: 500px;
+    max-width: 600px;
+    /* Keep original padding so label/legend stay in place */
+    padding: 24px;
+    height: 600px;
+    margin-bottom: 24px;
+}
+
+/* Shift only the calendar (not the label/legend) slightly to the left for alignment */
+@media (min-width: 769px) {
+    .calendar-wrapper-container .pika-lendar {
+        margin-left: -8px;
+    }
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Month Label */
+#monthLabel {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #093b2f;
+}
+
+/* Calendar Days */
+.calendar-header div {
+    margin-top: 10px;
+}
+
+.calendar-header button {
+    background-color: #093b2f;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-header button:hover {
+    background-color: #0e4e3e;
+    color: white;
+}
+
+.calendar-header button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.calendar div {
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+}
+
+.calendar div.header {
+    background-color: #093b2f;
+    color: white;
+    font-weight: bold;
+}
+
+.calendar div.available {
+    background-color: #b9e4c9;
+}
+
+.calendar div.unavailable {
+    background-color: #f28585;
+    color: white;
+    cursor: not-allowed;
+}
+
+.calendar div.selected {
+    background-color: #093b2f;
+    color: white;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1rem;
+    margin-top: 20px;
+    padding-left: 10px;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.legend-box.selected {
+    background-color: #093b2f;
+}
+
+.legend-box.available {
+    background-color: #b9e4c9;
+}
+
+.legend-box.unavailable {
+    background-color: #f28585;
+}
+
+/* Mode and Message */
+.mode-selection {
+    display: flex;
+    gap: 32px;
+    padding: 58px 0;
+    justify-content: start;
+    font-weight: 600;
+    margin-bottom: 197px;
+}
+
+.mode-selection label {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    gap: 10px;
+}
+
+.mode-selection input[type='radio'] {
+    width: 30px;
+    height: 30px;
+}
+
+/* Online/Onsite Buttons */
+.online-onsite-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.online-onsite-buttons button {
+    width: 180px;
+    height: 60px;
+    border: none;
+    border-radius: 12px;
+    background-color: #093b2f;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.online-onsite-buttons button:hover {
+    background-color: #0e4e3e;
+}
+
+.online-onsite-buttons button:active {
+    background-color: #075d48;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+}
+
+.submit-btn,
+.cancel-btn {
+    padding: 15px 50px;
+    border: none;
+    border-radius: 25px;
+    background-color: #093b2f;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.cancel-btn {
+    background-color: #888;
+}
+
+.submit-btn:hover {
+    background-color: #0e4e3e;
+}
+
+.cancel-btn:hover {
+    background-color: #666;
+}
+
+/* Checkbox Style */
+.checkbox-section input[type='checkbox'] {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border: 2px solid #093b2f;
+    border-radius: 6px;
+    background-color: white;
+    appearance: none;
+}
+
+.checkbox-section input[type='checkbox']:checked {
+    background-color: #093b2f;
+    border-color: #093b2f;
+}
+
+/* Message Container */
+.message-mode-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 60px;
+}
+
+/* Radio Button Style */
+.mode-selection input[type='radio'] {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    border-radius: 50%;
+    /* Use native radios with accent-color for consistent fill */
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    -moz-appearance: auto !important;
+    accent-color: #093b2f;
+}
+
+/* Disabled visual hint */
+.mode-selection input[type='radio'][disabled] {
+    filter: grayscale(1) opacity(0.6);
+    cursor: not-allowed;
+}
+
+/* Force visible checked dot for radios (consistent across browsers) */
+.mode-selection input[type='radio'] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #093b2f;
+    border-radius: 50%;
+    background: #fff;
+    position: relative;
+    display: inline-grid;
+    place-content: center;
+}
+.mode-selection input[type='radio']::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #093b2f;
+    transform: scale(0);
+    transition: transform 120ms ease-in-out;
+}
+.mode-selection input[type='radio']:checked::before {
+    transform: scale(1);
+}
+
+/* Saturday and Sunday Color */
+.calendar div:nth-child(7),
+.calendar div:nth-child(1) {
+    background-color: #01703c;
+    color: white;
+}
+
+.calendar div.unavailable:nth-child(7),
+.calendar div.unavailable:nth-child(1) {
+    background-color: #01703c;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.6rem; /* Slightly smaller font for mobile */
+        margin-top: 60px;
+        line-height: 1.3;
+    }
+    /* Make main content a column flex container to control order on mobile */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+    }
+    /* Keep the 'no results' message tucked right under the search bar */
+    #noResults {
+        order: 2;
+        margin-top: 8px;
+        align-self: flex-start;
+    }
+    .profile-cards-grid {
+        order: 3;
+    }
+    .search-container {
+        order: 1;
+    }
+    .calendar-wrapper-container label[for='calendar'] {
+        font-size: 1.3rem; /* bigger select date label */
+        font-weight: 600;
+    }
+    .modal-header select {
+        /* mobile dropdown spacing */
+        margin-top: 16px; /* adjust vertical spacing on mobile */
+        margin-right: 0; /* remove large right margin on small screens */
+        width: 100%;
+    }
+    .main-content {
+        padding-top: 1.3rem;
+    }
+
+    .modal-overlay {
+        left: 0 !important;
+        width: 100vw !important;
+    }
+
+    .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 12px !important;
+        border-radius: 0 !important;
+        gap: 20px !important;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-top: 28px !important;
+        padding-bottom: 28px !important;
+    }
+    .modal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 0;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 10px;
+        width: 100%;
+    }
+    .profile-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+    }
+    .profile-pic {
+        width: 70px;
+        height: 70px;
+    }
+    .checkbox-section {
+        grid-template-columns: 1fr;
+        gap: 15px; /* a bit more vertical space */
+        border-bottom: 2px solid #ccc; /* keep only bottom line */
+        padding: 14px 0 30px 0; /* extra space at bottom for separation after 'Others' */
+        /* margin-bottom: 1px; space below section instead of extra line */
+        width: 100%;
+    }
+    .calendar-wrapper-container {
+        order: 2;
+        min-width: unset;
+        max-width: unset;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 20px;
+    }
+    .message-mode-container {
+        margin-right: 0;
+        width: 100%;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 10px;
+        order: 1; /* Show mode selection above calendar */
+        margin-top: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .mode-selection {
+        order: 1;
+        gap: 16px;
+        padding: 5px 0 25px 0;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ccc;
+    }
+    .button-group {
+        order: 3;
+        gap: 10px;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 0;
+    }
+    .submit-btn,
+    .cancel-btn {
+        width: 48%;
+        padding: 12px 0;
+        font-size: 1rem;
+        margin-top: 50px;
+    }
+    .flex-layout {
+        display: flex;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+    .calendar-wrapper-container,
+    .message-mode-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Tablet range: make modal full-viewport width as well (ComSci student) */
+@media (min-width: 769px) and (max-width: 1280px) {
+    /* Prevent navbar overlap and balance hierarchy on tablet */
+    .header h1 {
+        font-size: 1.85rem;
+        line-height: 1.2;
+        margin-top: 28px;
+    }
+    .modal-overlay {
+        left: 0 !important;
+        width: 100vw !important;
+    }
+    .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        border-radius: 0 !important;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .flex-layout {
+        display: flex;
+        flex-direction: column !important;
+    }
+    .message-mode-container {
+        display: contents; /* allows children to be direct flex items */
+    }
+
+    .calendar-wrapper-container {
+        order: 2;
+        margin-bottom: 10px;
+    }
+    .button-group {
+        order: 3;
+        margin-top: 0;
+    }
+    body.modal-open .hamburger {
+        display: none !important;
+    }
+    .profile-section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+    }
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+    .profile-info h2,
+    #modalProfileName {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+        line-height: 1.1;
+    }
+    .profile-info p {
+        font-size: 1.05rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+}
+
+.others-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#otherTypeText {
+    width: 180px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1px 10px;
+    font-size: 1rem;
+    display: none;
+    background: #fff;
+    margin-left: 0;
+}
+
+.others-checkbox-container input[type='checkbox']:checked + label + #otherTypeText {
+    display: inline-block;
+}
+
+/* Notification styles */
+.notification {
+    display: none;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: #4bb543;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification.error {
+    background: #e74c3c;
+}
+
+.notification .close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .notification {
+        top: 20px;
+        right: 20px;
+        left: 20px;
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+}
+
+/* Subject dropdown: custom arrow positioned with left offset */
+#modalSubjectSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: right 14px center; /* move arrow 14px from the right edge */
+    padding-right: 40px; /* ensure text doesn't overlap with arrow */
+}
+#modalSubjectSelect::-ms-expand {
+    display: none;
+}
+
+/* Custom dropdown trigger: add matching arrow and offset */
+.cs-dd .cs-dd-trigger {
+    position: relative;
+    padding-right: 40px; /* room for arrow */
+}
+.cs-dd .cs-dd-trigger::after {
+    content: '';
+    position: absolute;
+    right: 14px; /* move arrow left from the edge */
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    pointer-events: none;
+}

@@ -1,0 +1,236 @@
+/* Shared chat styles extracted from inline <style> blocks in messages blades */
+/* Unread badge & presence */
+.unread-badge {
+    background: #d9534f;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 6px;
+    font-size: 11px;
+    margin-left: 6px;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+}
+.unread-badge.hidden {
+    display: none;
+}
+.presence-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    display: inline-block;
+    margin-right: 4px;
+}
+.presence-dot.online {
+    background: #28a745;
+}
+
+/* Typing indicator (header variant + bubble dots) */
+.typing-indicator {
+    font-size: 12px;
+    color: #555;
+    padding: 2px 8px;
+}
+.typing-indicator.bubbles {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+}
+.typing-indicator.bubbles span {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    opacity: 0.3;
+    display: inline-block;
+    animation: typing-blink 1.2s infinite ease-in-out;
+}
+.typing-indicator.bubbles span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-indicator.bubbles span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-blink {
+    0%,
+    80%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}
+
+/* Typing bubble shown inside chat body */
+.typing-bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border-radius: 16px;
+    background: #f1f1f1;
+    color: #555;
+    font-size: 13px;
+    max-width: 60%;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: auto;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.typing-bubble .dots {
+    display: inline-flex;
+    gap: 4px;
+}
+.typing-bubble .dots span {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: typing-blink 1.2s infinite ease-in-out;
+    display: block;
+}
+.typing-bubble .dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-bubble .dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Failed send state (optimistic bubble error) */
+.message.sent.failed {
+    border: 1px solid #d9534f;
+    position: relative;
+}
+.message.sent.failed::after {
+    content: ' Retry';
+    color: #d9534f;
+    font-size: 11px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+/* (Delivered check styling intentionally omitted per removal request) */
+
+/* Sent / Delivered status (tiny avatar) */
+.msg-status-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2px;
+}
+.msg-status-text {
+    font-size: 10px;
+    color: #555;
+    padding: 0 4px;
+    user-select: none;
+}
+.msg-status-avatar {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px #fff;
+}
+.message.sent.has-status {
+    margin-bottom: 2px;
+}
+
+/* === Toast Notifications (shared) === */
+.toast-root {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 12000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+}
+@media (max-width: 768px) {
+    .toast-root {
+        top: 20px;
+        right: 20px;
+        left: 20px;
+    }
+}
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font:
+        500 16px/1.3 'Poppins',
+        sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background: #4bb543;
+    animation: toast-in 200ms ease-out forwards;
+    position: relative;
+    overflow: hidden;
+}
+.toast--error {
+    background: #e74c3c;
+}
+.toast--ok {
+    background: #4bb543;
+}
+.toast__icon {
+    font-size: 20px;
+    line-height: 1;
+    flex: 0 0 auto;
+}
+.toast__text {
+    flex: 1;
+    word-break: break-word;
+}
+.toast-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 0 0 8px;
+    line-height: 1;
+}
+@keyframes toast-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes toast-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+/* Allow pointer events pass-through except toast area */
+.toast-root {
+    pointer-events: none;
+}
+.toast {
+    pointer-events: auto;
+}
+
+/* Accessible focus outline if ever focusable (future close button) */
+.toast:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}

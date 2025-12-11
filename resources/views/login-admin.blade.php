@@ -1,0 +1,1 @@
+{{-- Deprecated admin-specific login view. Unified login lives in resources/views/login.blade.php. --}}

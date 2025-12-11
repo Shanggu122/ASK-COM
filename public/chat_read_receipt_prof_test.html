@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Read Receipt Prof Test Harness</title>
+<style>
+  body { font-family: Arial, sans-serif; padding:16px; }
+  .message { display:inline-block; background:#e2e2e2; padding:6px 10px; border-radius:6px; margin:4px 0; }
+  .message.sent { background:#d1ece5; }
+  .msg-status-wrapper { font-size:12px; margin-top:2px; display:flex; align-items:center; gap:4px; }
+  .msg-status-avatar { width:18px; height:18px; border-radius:50%; object-fit:cover; border:1px solid #999; }
+  .divider { margin:16px 0; border-top:1px solid #ccc; }
+  .pass { color:green; }
+  .fail { color:#b30000; }
+  #log { font-size:13px; white-space:pre-wrap; background:#111; color:#eee; padding:10px; border-radius:6px; max-height:320px; overflow:auto; }
+</style>
+</head>
+<body>
+<h2>Professor Read Receipt Restore Test</h2>
+<p>Open console for extra logs. This simulates the logic in <code>messages-professor.blade.php</code>.</p>
+<div id="chat-body"></div>
+<div id="log"></div>
+<script>
+(function(){
+  const logBox = document.getElementById('log');
+  function log(msg, cls){ const line=document.createElement('div'); line.textContent=msg; if(cls) line.className=cls; logBox.appendChild(line); }
+  function assert(name, cond){ log((cond? 'PASS ':'FAIL ')+name, cond? 'pass':'fail'); if(!cond){ console.error('Assertion failed:', name); }}
+
+  // Minimal simulation of state
+  let currentStudentId = 99; // dummy
+
+  function showDeliveredAvatarProf(){
+    const lastOutgoing = Array.from(document.querySelectorAll('.message.sent')).pop();
+    if(!lastOutgoing){ console.debug('No lastOutgoing'); return; }
+    let wrap = document.querySelector('.msg-status-wrapper');
+    if(!wrap || !lastOutgoing.classList.contains('has-status')){
+      if(wrap && wrap.parentNode){ wrap.parentNode.removeChild(wrap); }
+      lastOutgoing.classList.add('has-status');
+      wrap=document.createElement('div');
+      wrap.className='msg-status-wrapper';
+      if(lastOutgoing.nextSibling){ lastOutgoing.parentNode.insertBefore(wrap, lastOutgoing.nextSibling); }
+      else { lastOutgoing.parentNode.appendChild(wrap); }
+    }
+    wrap.innerHTML='';
+    const img=document.createElement('img'); img.className='msg-status-avatar';
+    img.src='https://via.placeholder.com/32x32.png?text=U'; img.alt='Delivered';
+    wrap.appendChild(img);
+  }
+  function upgradeStatusToAvatarProf(){ showDeliveredAvatarProf(); try { localStorage.setItem('chat_read_stud_'+currentStudentId,'1'); } catch(e){} }
+  function restoreProfReadStatus(){ if(!currentStudentId) return; try { const stored=localStorage.getItem('chat_read_stud_'+currentStudentId); if(!stored) return; showDeliveredAvatarProf(); localStorage.setItem('chat_read_stud_'+currentStudentId,'1'); } catch(e){} }
+
+  function resetDOM(){ document.getElementById('chat-body').innerHTML=''; }
+  function makeSent(msg){ const d=document.createElement('div'); d.className='message sent'; d.textContent=msg; document.getElementById('chat-body').appendChild(d); return d; }
+  function makeReceived(msg){ const d=document.createElement('div'); d.className='message received'; d.textContent=msg; document.getElementById('chat-body').appendChild(d); return d; }
+
+  // Test Cases
+  function runTests(){
+    log('Running tests...');
+    localStorage.removeItem('chat_read_stud_'+currentStudentId);
+
+    resetDOM();
+    makeSent('Hello');
+    upgradeStatusToAvatarProf();
+    assert('Flag set after upgrade', localStorage.getItem('chat_read_stud_'+currentStudentId)==='1');
+    assert('Avatar present after upgrade', !!document.querySelector('.msg-status-avatar'));
+
+    // Simulate reload: remove wrapper from DOM but keep message + flag
+    const wrap=document.querySelector('.msg-status-wrapper'); if(wrap) wrap.remove();
+    assert('Wrapper removed (simulate raw reload DOM building messages only)', !document.querySelector('.msg-status-wrapper'));
+    restoreProfReadStatus();
+    assert('Avatar restored after restoreProfReadStatus()', !!document.querySelector('.msg-status-avatar'));
+
+    // Case: no flag => no avatar restoration
+    resetDOM();
+    makeSent('New Outgoing');
+    localStorage.removeItem('chat_read_stud_'+currentStudentId);
+    restoreProfReadStatus();
+    assert('No avatar when no flag', !document.querySelector('.msg-status-avatar'));
+
+    // Case: flag exists but no sent message
+    resetDOM();
+    localStorage.setItem('chat_read_stud_'+currentStudentId,'1');
+    restoreProfReadStatus();
+    assert('No error & no avatar if flag but no sent bubble', !document.querySelector('.msg-status-avatar'));
+
+    // Add sent after restore attempt, then manual showDelivered
+    makeSent('Late'); showDeliveredAvatarProf();
+    assert('Avatar appears with manual showDelivered', !!document.querySelector('.msg-status-avatar'));
+
+    log('Done. Inspect any FAIL lines above.');
+  }
+
+  runTests();
+})();
+</script>
+</body>
+</html>

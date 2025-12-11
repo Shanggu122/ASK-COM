@@ -1,0 +1,19 @@
+/* Shared styles for student/professor profile pages */
+
+/* Validation/help hints below inputs */
+.password-hint,
+.confirm-password-hint {
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Themed confirmation modal is already in confirm-modal.css */
+
+/* General inline field error, if needed later */
+.field-error-inline {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 6px;
+}

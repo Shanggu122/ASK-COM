@@ -1,0 +1,6 @@
+*
+!private/
+!public/
+!.gitignore
+/storage/dialogflow/dialogflow-key.json
+    composer require google/cloud-dialogflow

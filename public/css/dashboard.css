@@ -1,0 +1,1055 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: 100svh;
+    background-color: #e5f0ed;
+}
+
+#calendar {
+    visibility: hidden;
+}
+
+.ov-badge {
+    position: absolute;
+    left: 0.375rem;
+    bottom: 0.375rem;
+    font-size: 0.625rem;
+    line-height: 1;
+    padding: 0.1875rem 0.375rem;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: calc(100% - 0.75rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+}
+
+.ov-holiday {
+    background-color: #9b59b6;
+}
+.ov-blocked {
+    background-color: #374151;
+}
+.ov-force {
+    background-color: #2563eb;
+}
+.ov-online {
+    background-color: #ff69b4;
+}
+.ov-endyear {
+    background-color: #6366f1;
+}
+
+.day-holiday {
+    background: rgba(155, 89, 182, 0.55) !important;
+}
+.day-blocked {
+    background: rgba(55, 65, 81, 0.75) !important;
+}
+.day-force {
+    background: rgba(37, 99, 235, 0.6) !important;
+}
+.day-online {
+    background: rgba(255, 105, 180, 0.45) !important;
+}
+.day-endyear {
+    background: rgba(99, 102, 241, 0.6) !important;
+}
+
+@media (max-width: 950px) {
+    body {
+        display: block;
+        min-height: auto;
+    }
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 {
+    font-size: 2rem;
+    color: #12372a;
+}
+
+/* Tablet/smaller desktop: keep title in original left position, just move it down */
+@media (max-width: 950px) and (min-width: 769px) {
+    .header {
+        margin-top: 2.75rem;
+    }
+    .header h1 {
+        padding-left: 0;
+    }
+}
+
+/* Chat Button */
+.chat-button {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    background-color: #12372a;
+    color: white;
+    border: none;
+    padding: 1rem 1.2rem;
+    border-radius: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    z-index: 2147483647 !important;
+}
+.chat-button i {
+    font-size: 1.2rem;
+}
+
+/* Chat Overlay */
+.chat-overlay {
+    position: fixed;
+    top: 0;
+    right: -25rem;
+    width: 21.875rem;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -0.125rem 0 0.625rem rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 2147483647 !important;
+    transition:
+        right 0.3s ease,
+        transform 0.3s ease;
+    border-left: 0.1875rem solid #12372a;
+    transform: translateX(0);
+}
+.chat-overlay.open {
+    right: 0;
+}
+/* When legend is open on student page, push chat UI behind overlay */
+body.legend-open .chat-button,
+body.legend-open .chat-overlay {
+    z-index: 0 !important;
+    pointer-events: none;
+}
+.chat-overlay .chat-header {
+    background-color: #12372a;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+.chat-overlay .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.875rem;
+    cursor: pointer;
+}
+.chat-overlay .chat-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    padding: 0.5rem 0.625rem;
+    border-top: 0.0625rem solid #ddd;
+    background: #fff;
+}
+.quick-reply {
+    background: #12372a;
+    color: #fff;
+    border: none;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    line-height: 1.2;
+    transition: background 0.25s;
+}
+.quick-reply:hover {
+    background: #0e4e23;
+}
+.quick-replies-toggle {
+    position: absolute;
+    bottom: 5.3125rem;
+    right: 0.875rem;
+    background: #12372a;
+    color: #fff;
+    border: none;
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.25);
+    transition: background 0.25s;
+    font-size: 1.25rem;
+}
+.quick-replies-toggle:hover {
+    background: #0e4e23;
+}
+.chat-overlay .message.bot {
+    margin: 0.5rem 0;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+    font-size: 0.875rem;
+    background-color: #e0f2f1;
+    align-self: flex-start;
+}
+
+#chatForm {
+    display: flex;
+    padding: 1rem;
+    border-top: 0.0625rem solid #ccc;
+    background-color: #ffffff;
+    gap: 0.5rem;
+}
+
+#chatForm input[type='text'] {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+#chatForm button {
+    background-color: #12372a;
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+#chatForm button:hover {
+    background-color: #0e4e23;
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: #d0e6ff;
+    color: #000;
+    padding: 0.6rem 0.8rem;
+    margin: 0.5rem 0;
+    margin-right: 0.5rem;
+    border-radius: 0.75rem;
+    border-bottom-right-radius: 0;
+    max-width: 80%;
+    font-size: 0.875rem;
+    text-align: left;
+    display: inline-block;
+}
+
+/* Legend styling (reverted) */
+.legend {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: clamp(1.5rem, 4vw + 1rem, 6.25rem);
+    margin-bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: none;
+    position: static;
+}
+.legend div {
+    display: flex;
+    align-items: center;
+    margin: 0 0.75rem;
+}
+.legend-box {
+    width: 2.5rem;
+    height: 1rem;
+    margin-right: 0.375rem;
+    border-radius: 0.1875rem;
+}
+/* Shift only the 'Approved' legend (second item) slightly to the right */
+.legend div:nth-child(2) {
+    margin-left: 1.5rem;
+}
+
+.legend-box.completed,
+.status-completed,
+.status-completed:has(.is-today) {
+    background-color: #093b2f !important;
+}
+.legend-box.pending,
+.status-pending,
+.status-pending:has(.is-today) {
+    background-color: #ffa600 !important;
+}
+.legend-box.rescheduled,
+.status-rescheduled,
+.status-rescheduled:has(.is-today) {
+    background-color: #c50000 !important;
+}
+.legend-box.approved,
+.status-approved,
+.status-approved:has(.is-today) {
+    background-color: #0f9657 !important;
+}
+
+.is-today:has(.status-pending) {
+    color: #5fb9d4 !important;
+}
+
+.pika-single,
+.pika-label {
+    background: transparent !important;
+}
+
+.calendar-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Prefer a wider calendar footprint on large screens */
+    flex: 1 1 55rem;
+    max-width: 60rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    min-width: 18.75rem;
+}
+
+.box {
+    /* Notifications panel becomes flexible */
+    /* Widened panel for better readability on large screens */
+    flex: 1 1 25rem;
+    max-width: 32.5rem;
+    width: 100%;
+    margin-left: auto; /* stay to right on wide screens */
+    min-width: 17.5rem;
+}
+
+.calendar-wrapper-container {
+    width: 100%;
+    /* Reserve full height for a 6-week month so legend below does not jump */
+    min-height: 35rem; /* adjust if your calendar cell size changes */
+}
+
+@media (min-width: 951px) {
+    .legend-toggle {
+        left: 15rem !important;
+    }
+    .legend-panel {
+        left: 15.25rem !important;
+    }
+}
+
+/* Calendar styling */
+.pika-table td {
+    height: 4.6875rem !important;
+    padding: 0 !important;
+    vertical-align: middle !important; /* Vertically center content */
+}
+
+.pika-table th:has([title='Saturday']),
+.pika-table th:has([title='Tuesday']),
+.pika-table th:has([title='Wednesday']),
+.pika-table th:has([title='Thursday']),
+.pika-table th:has([title='Friday']) {
+    background-color: #12372a;
+    color: #fff;
+    border-radius: 0.25rem;
+    padding: 0.3125rem;
+    height: 3.75rem !important;
+}
+
+.pika-table th:has([title='Monday']),
+.pika-table th:has([title='Sunday']) {
+    background-color: #01703c;
+    color: #fff;
+    border-radius: 0.25rem;
+    padding: 0.625rem;
+}
+
+/* Bring calendar prev/next buttons slightly toward center */
+.pika-prev,
+.pika-next {
+    background-color: #0d2b20;
+    border-radius: 50%;
+    color: #ffffff;
+    border: 0.125rem solid #071a13;
+    font-size: 1.125rem;
+    padding: 0.625rem;
+    width: 2.375rem !important;
+    height: 2.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    text-indent: -999rem;
+    position: relative;
+    overflow: hidden;
+    background-image: none !important;
+    box-shadow: none;
+}
+.pika-prev::after,
+.pika-next::after {
+    content: '';
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: 700;
+    color: #ffffff;
+    text-indent: 0;
+    z-index: 2;
+}
+.pika-prev::after {
+    content: '\2039';
+}
+.pika-next::after {
+    content: '\203A';
+}
+.pika-prev {
+    left: 0.625rem;
+}
+.pika-next {
+    right: 0.625rem;
+}
+@media (max-width: 768px) {
+    .pika-prev {
+        left: 0.5625rem;
+    }
+    .pika-next {
+        right: 0.5625rem;
+    }
+}
+
+.pika-button {
+    height: 3.75rem !important;
+    min-height: 3rem !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cac7c7;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    padding: 0.375rem;
+    margin: 0.25rem 0;
+    pointer-events: auto;
+    cursor: default;
+    font-size: clamp(0.7rem, 2vw, 1rem) !important;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+.pika-button:hover,
+.pika-row.pick-whole-week:hover .pika-button,
+.pika-button:focus,
+.pika-button:active {
+    color: #fff;
+    background: #cac7c7;
+    box-shadow: none;
+    outline: none;
+    border-radius: 0.1875rem;
+}
+
+.is-selected .pika-button,
+.has-event .pika-button {
+    color: #ffffff;
+    background-color: #cac7c7 !important;
+    box-shadow: none;
+}
+
+.is-today .pika-button {
+    color: #fff;
+    background-color: #5fb9d4;
+    font-weight: 700;
+}
+
+.is-today .pika-button:hover,
+.is-today .pika-button:focus,
+.is-today .pika-button:active {
+    background: #5fb9d4 !important;
+    color: #fff !important;
+}
+
+.pika-button.day-online:hover,
+.pika-button.day-online:focus,
+.pika-button.day-online:active {
+    background: rgba(255, 105, 180, 0.45) !important;
+    color: #fff !important;
+}
+
+.pika-button.day-force:hover,
+.pika-button.day-force:focus,
+.pika-button.day-force:active {
+    background: rgba(37, 99, 235, 0.6) !important;
+    color: #fff !important;
+}
+
+.pika-button.day-holiday:hover,
+.pika-button.day-holiday:focus,
+.pika-button.day-holiday:active {
+    background: rgba(155, 89, 182, 0.55) !important;
+    color: #fff !important;
+}
+
+.pika-button.day-blocked:hover,
+.pika-button.day-blocked:focus,
+.pika-button.day-blocked:active {
+    background: rgba(55, 65, 81, 0.75) !important;
+    color: #fff !important;
+}
+
+.pika-button.day-endyear:hover,
+.pika-button.day-endyear:focus,
+.pika-button.day-endyear:active {
+    background: rgba(99, 102, 241, 0.6) !important;
+    color: #fff !important;
+}
+
+.pika-single {
+    display: block !important;
+    border: none;
+    min-height: 26.25rem;
+    height: auto;
+    max-height: 70vh;
+    box-sizing: border-box;
+}
+
+.pika-table {
+    border-radius: 0.1875rem;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0.5rem;
+    table-layout: fixed;
+}
+
+.pika-label {
+    color: #12372a;
+    font-size: 1.5625rem;
+}
+
+.pika-day {
+    text-align: center;
+}
+
+.pika-lendar {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.has-booking {
+    border-radius: 0.25rem;
+    position: relative;
+    color: #fff;
+    font-weight: 700;
+}
+
+.completion-review-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000000;
+    padding: 1.25rem;
+}
+
+.completion-review-modal {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    width: 100%;
+    max-width: 26.25rem;
+    box-shadow: 0 1.5rem 3.75rem rgba(12, 34, 26, 0.28);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.completion-review-modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem 1rem;
+    background: #0e2f27;
+    color: #f6fffb;
+}
+
+.completion-review-modal .modal-header .title {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+}
+
+.completion-review-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+}
+
+.completion-review-close:hover {
+    opacity: 1;
+}
+
+.completion-review-modal .modal-body {
+    padding: 1.375rem 1.5rem 0;
+    color: #1f2a37;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.completion-review-remarks {
+    background: #ffffff;
+    border: 0.0625rem solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.125rem;
+    color: #12372a;
+}
+
+.completion-review-remarks strong {
+    display: block;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0d3b2e;
+    margin-bottom: 0.375rem;
+}
+
+.completion-review-remarks p {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.completion-review-meta {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 1.125rem;
+}
+
+.completion-review-error {
+    display: none;
+    margin: 0 0 1.375rem;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 0.0625rem solid #fecaca;
+    border-radius: 0.625rem;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+}
+
+.completion-review-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.125rem 1.5rem 1.5rem;
+    background: #f8fafc;
+}
+
+.completion-review-actions button {
+    flex: 1;
+    border-radius: 999rem;
+    border: 0.125rem solid transparent;
+    padding: 0.75rem 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.completion-review-actions .btn-outline {
+    background: #ffffff;
+    color: #b91c1c;
+    border-color: #f8d0d0;
+}
+
+.completion-review-actions .btn-outline:hover {
+    border-color: #b91c1c;
+    background: #fff5f5;
+}
+
+.completion-review-actions .btn-solid {
+    background: #1f7a67;
+    color: #ffffff;
+}
+
+.completion-review-actions .btn-solid:hover {
+    background: #155d4c;
+    transform: translateY(-0.0625rem);
+}
+
+@media (max-width: 30rem) {
+    .completion-review-modal {
+        border-radius: 1rem;
+    }
+    .completion-review-actions {
+        flex-direction: column;
+    }
+}
+
+.flex-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap; /* allow wrapping on mid screens */
+}
+
+/* Laptop & mid-width tuning */
+@media (max-width: 1400px) {
+    .calendar-box {
+        max-width: 45rem;
+    }
+}
+@media (max-width: 1300px) {
+    .calendar-box {
+        flex: 1 1 58%;
+    }
+    .box {
+        flex: 1 1 38%;
+    }
+}
+/* Mid-width: switch to bell icon (avoid stacking notifications below calendar) */
+@media (max-width: 1450px) and (min-width: 769px) {
+    /* Convert hidden panel into off-canvas drawer space (will be toggled via JS if needed) */
+    .box {
+        display: none !important; /* default hidden; bell will control a cloned/dropdown container */
+    }
+    .flex-layout {
+        justify-content: center;
+    }
+    .calendar-box {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    /* Ensure legend spacing tighter when full-width */
+    .legend {
+        margin-top: 2.5rem;
+    }
+}
+
+/* Off-canvas style for notifications when shown from bell mid-width */
+@media (max-width: 1450px) and (min-width: 769px) {
+    .mobile-notifications-dropdown {
+        width: 30rem !important; /* wider than mobile */
+        max-height: 80vh;
+        overflow-y: auto;
+        right: 1.25rem;
+        left: auto;
+    }
+}
+@media (max-width: 1150px) {
+    .calendar-box {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    .box {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+@media (max-width: 992px) {
+    .flex-layout {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        margin-top: 2.5rem; /* Add space for the navbar */
+        justify-content: center; /* center contents */
+    }
+    .header h1 {
+        text-align: left; /* shift slightly left */
+        width: 100%;
+        padding-left: 1.125rem; /* subtle left offset */
+    }
+    .flex-layout {
+        flex-direction: column;
+    }
+    .calendar-box {
+        width: 100% !important;
+        max-width: none; /* allow full width */
+        margin-left: 0; /* ensure no unintended offset */
+        margin-right: 0;
+        /* left align internal calendar */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .box {
+        width: 100%;
+    }
+    /* reduce side padding so calendar sits closer to left edge */
+    .main-content {
+        padding-left: 0; /* move calendar slightly more left */
+        padding-right: 0.75rem;
+    }
+    /* ensure the visible calendar grid itself is centered */
+    .calendar-wrapper-container,
+    .pika-single {
+        width: 100%;
+        max-width: 100%;
+        margin: 0; /* align left */
+        /* Slightly smaller reserved height on mobile */
+        min-height: 31.25rem;
+    }
+    /* shift legend slightly right only on mobile */
+    .legend {
+        padding-left: 0.3125rem;
+    }
+    /* Shift only the 'Approved' legend (second item) slightly to the right on mobile */
+    .legend div:nth-child(2) {
+        margin-left: 2.125rem;
+    }
+
+    /* --- Fix legend from moving when month height changes --- */
+    /* Pin legend near bottom above chat button so calendar height changes don't shift it */
+    .legend {
+        position: fixed;
+        left: 0;
+        bottom: 4.75rem; /* leave room above chat button */
+        width: 100%;
+        background: #e5f0ed; /* exact body background for seamless blend */
+        padding: 0.625rem 1.125rem 0.75rem;
+        margin: 0 !important;
+        box-shadow: none; /* remove contrast line */
+        z-index: 1200; /* above calendar cells */
+        gap: 1.375rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .legend div {
+        margin: 0.25rem 1rem 0 0 !important;
+    }
+    .legend div:nth-child(2) {
+        margin-left: 0 !important;
+    }
+    /* Ensure page content not hidden behind fixed legend */
+    .main-content {
+        padding-bottom: 10rem;
+    }
+    /* Lift chat button slightly so it doesn't overlap legend */
+    .chat-button {
+        bottom: 1.125rem !important;
+    }
+}
+
+/* Mobile narrow (<=700px): raise legend a bit so it isn't too low */
+@media (max-width: 700px) {
+    .legend {
+        bottom: 20rem; /* default for narrow screens */
+    }
+    /* Add extra bottom padding so content doesn't hide behind raised legend */
+    .main-content {
+        padding-bottom: 23.75rem !important;
+    }
+}
+
+/* Very narrow mobile (<=640px): lower legend slightly */
+@media (max-width: 640px) {
+    .legend {
+        bottom: 17.5rem;
+    }
+    .main-content {
+        padding-bottom: 21.25rem !important;
+    }
+}
+
+/* If viewport height is short, keep legend a bit lower to avoid covering content */
+@media (max-width: 700px) and (max-height: 740px) {
+    .legend {
+        bottom: 11.25rem;
+    }
+    .main-content {
+        padding-bottom: 15rem !important;
+    }
+}
+
+/* LAYERING: CHATBOT ON TOP, NOTIFICATIONS SECOND, EVERYTHING ELSE BELOW */
+.mobile-notifications-dropdown,
+.mobile-notifications-dropdown.active {
+    z-index: 1000000 !important; /* High but below chatbot */
+}
+
+.mobile-notification-bell,
+#mobileNotificationBell,
+button#mobileNotificationBell,
+.mobile-header .mobile-notification-bell,
+button.mobile-notification-bell,
+div.mobile-header button#mobileNotificationBell.mobile-notification-bell {
+    z-index: 1000000 !important; /* High but below chatbot */
+}
+
+/* When chat open, push bell behind and fade out */
+body.chat-open #mobileNotificationBell {
+    z-index: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+body:not(.chat-open) #mobileNotificationBell {
+    transition: opacity 0.2s ease;
+}
+
+/* Slightly larger calendar numbers on mobile for better readability */
+@media (max-width: 768px) {
+    .pika-button {
+        font-size: 0.95rem !important;
+    }
+    /* Enlarge weekday labels (Mon Tue ...) */
+    .pika-table th abbr {
+        font-size: 0.9rem !important;
+        letter-spacing: 0.03125rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pika-table {
+        border-spacing: 0.3125rem;
+    }
+    .pika-table td {
+        height: 3.9375rem !important;
+    }
+    .pika-button {
+        min-height: 3.6875rem !important;
+        height: 3.6875rem !important;
+    }
+}
+
+/* Handset chat widget optimisation (Pixel 8A and similar widths) */
+@media (max-width: 450px) {
+    .chat-overlay {
+        width: 92vw;
+        max-width: 22.5rem;
+        right: 0;
+        transform: translateX(104%);
+        border-left-width: 0;
+        border-radius: 1.125rem 0 0 1.125rem;
+    }
+
+    .chat-overlay.open {
+        transform: translateX(0);
+    }
+
+    #chatForm {
+        padding: 0.75rem 0.75rem 0.85rem;
+        gap: 0.45rem;
+    }
+
+    #chatForm input[type='text'] {
+        margin-right: 0;
+        padding: 0.55rem 0.65rem;
+        font-size: 0.8125rem;
+    }
+
+    #chatForm button {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.8125rem;
+        min-width: 4rem;
+    }
+
+    .quick-replies {
+        padding: 0.375rem 0.5rem;
+        gap: 0.25rem;
+    }
+
+    .quick-reply {
+        font-size: 0.6875rem;
+        padding: 0.3125rem 0.5625rem;
+    }
+}
+
+/* Small tablet override (701–768px): don't pin legend at the bottom */
+@media (min-width: 701px) and (max-width: 768px) {
+    .legend {
+        position: static !important;
+        left: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        background: none !important;
+        padding: 0 !important;
+        margin-top: 2.25rem !important;
+        box-shadow: none !important;
+        gap: 1rem !important;
+        justify-content: flex-start !important;
+    }
+    .legend div {
+        margin: 0 0.75rem !important;
+    }
+    .legend div:nth-child(2) {
+        margin-left: 1.5rem !important;
+    }
+    .main-content {
+        padding-bottom: 0 !important;
+    }
+    .chat-button {
+        bottom: 1.25rem !important;
+    }
+}
+
+/* Ultra-small devices */
+@media (max-width: 380px) {
+    .main-content {
+        padding: 1.2rem 1rem 4rem;
+    }
+    .legend {
+        gap: 0.625rem;
+    }
+    .pika-button {
+        font-size: 0.9rem !important;
+        height: 3.125rem !important;
+    }
+    .pika-table td {
+        height: 3.4375rem !important;
+    }
+}
+
+/* Short viewport adjustments (small laptops) */
+@media (max-height: 820px) and (min-width: 769px) {
+    .pika-table td {
+        height: 3.75rem !important;
+    }
+    .pika-button {
+        height: 3.375rem !important;
+    }
+}
+
+/* (Removed legend enlargement user disliked) */

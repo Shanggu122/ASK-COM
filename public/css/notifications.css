@@ -1,0 +1,203 @@
+/* Professor Notification Inbox Styles */
+.inbox-notifications {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 650px;
+    max-height: 650px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.inbox-header {
+    padding: 20px;
+    background: #12372a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+}
+
+.inbox-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.inbox-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mark-all-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.mark-all-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.unread-count {
+    background: #ff4444;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.inbox-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    max-height: calc(650px - 70px);
+}
+
+.inbox-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.inbox-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.inbox-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.inbox-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.loading-notifications {
+    padding: 40px 20px;
+    text-align: center;
+    color: #666;
+}
+
+.loading-notifications i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.notification-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item.unread {
+    background: #f0f8ff;
+    border-left: 4px solid #12372a;
+}
+
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 20px;
+    width: 8px;
+    height: 8px;
+    background: #12372a;
+    border-radius: 50%;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.notification-message {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 12px;
+}
+
+.notification-type {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.notification-type.booking_request {
+    background: #e7f3ff;
+    color: #0066cc;
+}
+
+.notification-type.accepted {
+    background: #d4edda;
+    color: #155724;
+}
+
+.notification-type.completed {
+    background: #cce5ff;
+    color: #0056b3;
+}
+
+.notification-type.rescheduled {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.notification-type.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.no-notifications {
+    padding: 40px 20px;
+    text-align: center;
+    color: #666;
+}
+
+.no-notifications i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+/* Responsive design for notifications */
+@media (max-width: 768px) {
+    .inbox-notifications {
+        height: 450px;
+        max-height: 450px;
+        min-height: 300px;
+    }
+
+    .inbox-content {
+        max-height: calc(450px - 70px);
+    }
+}

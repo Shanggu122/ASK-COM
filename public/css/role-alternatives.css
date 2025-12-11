@@ -1,0 +1,60 @@
+/* Floating Role Indicator - appears in main content */
+.floating-role-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(18, 55, 42, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.floating-role-indicator:hover {
+    background: rgba(18, 55, 42, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.floating-role-indicator i {
+    margin-right: 6px;
+    font-size: 0.8rem;
+}
+
+/* Breadcrumb Style Indicator */
+.breadcrumb-role {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px auto 20px;
+    width: fit-content;
+    display: block;
+}
+
+/* Sidebar accent line */
+.sidebar-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #3b82f6 0%, #3b82f6 100%);
+}
+
+.sidebar-accent.professor {
+    background: linear-gradient(to bottom, #ef4444 0%, #ef4444 100%);
+}
+
+.sidebar-accent.admin {
+    background: linear-gradient(to bottom, #8b5cf6 0%, #8b5cf6 100%);
+}

@@ -1,0 +1,45 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Back to landing page" [ref=e4] [cursor=pointer]:
+        - /url: http://127.0.0.1:8000
+        - generic [ref=e5] [cursor=pointer]: 
+      - img "Adamson Logo" [ref=e6]
+      - heading "Adamson University College of Computing and Information Technology" [level=2] [ref=e7]:
+        - generic [ref=e8]: Adamson University
+        - generic [ref=e9]: College of Computing and Information Technology
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - img "ASCC-IT Logo" [ref=e12]
+        - heading "ASCC-IT" [level=1] [ref=e13]
+      - paragraph [ref=e14]:
+        - emphasis [ref=e15]:
+          - generic [ref=e16]: C
+          - text: atalyzing
+          - generic [ref=e17]: C
+          - text: hange
+          - generic [ref=e18]: I
+          - text: nnovating for
+          - generic [ref=e19]: T
+          - text: omorrow
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - textbox "Student ID" [ref=e22]
+          - generic: Student ID
+        - generic [ref=e23]:
+          - textbox "Password" [ref=e24]
+          - generic: Password
+          - button "Show password" [ref=e25] [cursor=pointer]:
+            - generic [ref=e26] [cursor=pointer]: 
+        - generic [ref=e29] [cursor=pointer]:
+          - checkbox "Remember me" [ref=e30]
+          - generic [ref=e31] [cursor=pointer]: Remember me
+        - button "Log In" [ref=e32] [cursor=pointer]
+        - link "Forgot Password?" [ref=e34] [cursor=pointer]:
+          - /url: http://127.0.0.1:8000/forgotpassword
+  - generic:
+    - generic: Signing you in...
+```

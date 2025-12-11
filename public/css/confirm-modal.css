@@ -1,0 +1,99 @@
+/* Confirmation Modal (Dark Green Theme) */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Must be above booking modal overlay/content (10000/10001) */
+    z-index: 13000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.confirm-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.confirm-modal {
+    background: #0b3d2e; /* app dark green */
+    color: #e7f6ef;
+    border-radius: 12px;
+    width: 92%;
+    max-width: 520px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    animation: modalSlideIn 0.25s ease-out;
+}
+
+.confirm-header {
+    padding: 16px 20px;
+    background: #0b251c; /* deeper */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.confirm-header i {
+    font-size: 20px;
+    color: #1e8f5a; /* green accent */
+}
+
+.confirm-body {
+    padding: 18px 20px 6px 20px;
+    color: #d5eee5;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 14px 20px 20px 20px;
+}
+
+.btn-confirm-green,
+.btn-cancel-red {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px; /* pill */
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        transform 0.06s ease,
+        filter 0.2s ease,
+        background-color 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-confirm-green {
+    background: #f00800; /* darker green */
+    color: #ffffff;
+}
+
+.btn-confirm-green:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.btn-confirm-green:active {
+    transform: translateY(0);
+}
+
+.btn-cancel-red {
+    background: #30c02b; /* darker red */
+    color: #ffffff;
+}
+
+.btn-cancel-red:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.btn-cancel-red:active {
+    transform: translateY(0);
+}

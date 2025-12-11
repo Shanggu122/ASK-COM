@@ -1,0 +1,1 @@
+{{-- Deprecated landing page. Unified login routes all traffic through resources/views/login.blade.php. --}}

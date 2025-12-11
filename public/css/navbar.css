@@ -1,0 +1,534 @@
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #12372a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0;
+    transition: left 0.3s;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+.sidebar img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Simple role indicator */
+.simple-role-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.role-line {
+    width: 60px;
+    height: 2px;
+    margin-bottom: 8px;
+    border-radius: 1px;
+}
+
+.student-line {
+    background-color: #3b82f6;
+}
+
+.professor-line {
+    background-color: #ef4444;
+}
+
+.admin-line {
+    background-color: #8b5cf6;
+}
+
+.role-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Simple dashboard title */
+.dashboard-title {
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+}
+.sidebar ul li a {
+    display: block;
+    padding: 1rem 0 1rem 2rem;
+    color: white;
+    text-decoration: none;
+}
+.sidebar ul li a:hover {
+    background-color: #20543d;
+}
+
+/* Hamburger button */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 5000; /* Below chatbot */
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #12372a;
+    cursor: pointer;
+    transition:
+        left 0.3s,
+        background 0.3s,
+        color 0.3s;
+}
+
+/* Mobile header container */
+.mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: transparent;
+    z-index: 5000;
+    pointer-events: none; /* Allow clicks through the header */
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.mobile-header .hamburger,
+.mobile-header .mobile-notification-bell {
+    pointer-events: all; /* But allow clicks on the buttons */
+}
+
+.preview-open .mobile-header .hamburger,
+.preview-open .mobile-header .mobile-notification-bell {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile Role Indicator */
+.mobile-role-indicator {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: all;
+    z-index: 5000;
+}
+
+.mobile-role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-role-badge.student {
+    background-color: #2563eb;
+    color: white;
+}
+
+.mobile-role-badge.professor {
+    background-color: #dc2626;
+    color: white;
+}
+
+.mobile-role-badge.admin {
+    background-color: #7c3aed;
+    color: white;
+}
+
+/* Mobile notification bell */
+.mobile-notification-bell {
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000000 !important;
+    background: #12372a;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* FORCE notification bell to be behind chatbot with MAXIMUM specificity */
+button.mobile-notification-bell,
+.mobile-header .mobile-notification-bell,
+#mobileNotificationBell.mobile-notification-bell,
+button#mobileNotificationBell.mobile-notification-bell,
+div.mobile-header button#mobileNotificationBell.mobile-notification-bell {
+    z-index: 1000000 !important;
+}
+
+.mobile-notification-bell:hover {
+    background: #20543d;
+    transform: scale(1.05);
+}
+
+.mobile-notification-bell i {
+    font-size: 1.2rem;
+}
+
+/* Notification badge */
+.mobile-notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+/* Mobile notifications dropdown */
+.mobile-notifications-dropdown {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 1000000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-notifications-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mobile-notifications-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 12px 12px 0 0;
+}
+
+.mobile-notifications-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #12372a;
+    font-weight: 600;
+}
+
+.close-mobile-notifications {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-mobile-notifications:hover {
+    background: #eee;
+    color: #333;
+}
+
+.mobile-notifications-content {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(80vh - 120px);
+    padding: 10px;
+}
+
+.mobile-notifications-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    background: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+}
+
+.mark-all-read-mobile {
+    width: 100%;
+    background: #12372a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.mark-all-read-mobile:hover {
+    background: #20543d;
+}
+
+/* Responsive styles */
+@media (max-width: 950px) {
+    .mobile-header {
+        display: block;
+        height: 64px; /* a bit taller for visual balance */
+    }
+    /* Only on student ITIS/COMSCI pages: add bg after scroll */
+    body.page-itis .mobile-header.scrolled,
+    body.page-comsci .mobile-header.scrolled {
+        background: #12372a; /* solid dark green */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        pointer-events: all; /* prevent clicks on content underneath the bar */
+    }
+    /* When header is scrolled, make hamburger icon white for contrast */
+    body.page-itis .mobile-header.scrolled .hamburger,
+    body.page-comsci .mobile-header.scrolled .hamburger {
+        color: #ffffff !important;
+    }
+    /* Keep the hamburger vertically centered within the mobile header */
+    .mobile-header .hamburger {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        left: 16px !important;
+    }
+
+    /* Add top offset for content when scrolled so the bar doesn't overlap */
+    body.page-itis.navbar-offset .main-content,
+    body.page-comsci.navbar-offset .main-content {
+        padding-top: calc(64px + 1rem) !important; /* match mobile-header height */
+        scroll-padding-top: 64px; /* smoother anchor scrolls */
+    }
+
+    .mobile-role-indicator {
+        display: block;
+    }
+
+    .mobile-notification-bell {
+        display: block !important;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000000 !important;
+    }
+
+    .sidebar {
+        left: -240px;
+        transition: left 0.3s;
+        width: 220px;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000 !important;
+    }
+
+    /* Mobile specific styling for simple role indicator */
+    .simple-role-indicator {
+        margin-bottom: 15px;
+    }
+
+    .role-line {
+        width: 50px;
+        height: 2px;
+    }
+
+    .role-label {
+        font-size: 0.7rem;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+    .hamburger {
+        display: block;
+    }
+    /* Hamburger stays on top and moves right when sidebar is open */
+    .sidebar.active ~ .hamburger,
+    .hamburger.active {
+        background: #12372a !important;
+        color: #ffffff !important;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        z-index: 5000;
+    }
+    body {
+        padding-left: 0 !important; /* Remove any left padding on mobile */
+    }
+    /* Remove the overlay pseudo-element */
+    .sidebar.active::after {
+        display: none;
+        content: none;
+    }
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+        z-index: 1 !important;
+        position: relative;
+    }
+    .calendar,
+    .calendar-wrapper {
+        z-index: 1 !important;
+        position: relative;
+    }
+
+    /* Hide desktop notifications in mobile view */
+    .inbox-notifications {
+        display: none !important;
+    }
+}
+
+/* Tablet range for messages page only: hide sidebar to give chat more room */
+/* Tablet override for messages page WAS up to 1100px; now cap at 950px so desktop (>=951) shows normal sidebar without hamburger */
+@media (min-width: 701px) and (max-width: 950px) {
+    body.messages-page .sidebar {
+        left: -240px !important;
+    }
+    /* Hamburger without white circular background */
+    body.messages-page .hamburger {
+        display: block !important;
+        position: fixed;
+        top: 16px;
+        left: 18px;
+        z-index: 5001;
+        color: #12372a;
+        background: none;
+        border: none;
+        width: auto;
+        height: auto;
+        line-height: normal;
+        padding: 0;
+    }
+    body.messages-page {
+        padding-left: 0 !important;
+    }
+    body.messages-page .sidebar.active {
+        left: 0 !important;
+    }
+    /* Remove desktop width shrink so chat can extend fully */
+    body.messages-page .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+/* Mid-width dashboard: keep bell visible (hide hamburger only above 950px)
+   Note: At <= 950px we want the mobile hamburger visible. */
+@media (max-width: 1450px) and (min-width: 951px) {
+    .mobile-header {
+        display: block;
+        pointer-events: none;
+    }
+    .mobile-header .hamburger {
+        display: none !important;
+    }
+    .mobile-notification-bell {
+        display: block !important;
+        pointer-events: all;
+    }
+}
+
+/* On desktop, if you have a wrapper for your main content, make sure it has: */
+@media (min-width: 768px) {
+    .main-content {
+        margin-left: 220px; /* same as sidebar width */
+        width: calc(100% - 220px);
+        transition: margin-left 0.3s;
+    }
+    .sidebar img {
+        margin-top: 30px !important; /* Adjust this value as needed */
+        margin-bottom: 30px !important; /* Optional: reduce bottom margin for better spacing */
+    }
+}
+
+@media (min-width: 1451px) {
+    #mobileNotificationBell.mobile-notification-bell {
+        display: none !important;
+    }
+}
+
+/* FINAL OVERRIDE - FORCE NOTIFICATION BELL BEHIND CHATBOT */
+#mobileNotificationBell,
+button#mobileNotificationBell,
+.mobile-notification-bell {
+    z-index: 10 !important;
+    position: fixed !important;
+}
+
+/* FINAL OVERRIDE - FORCE NOTIFICATION DROPDOWN BEHIND CHATBOT */
+.mobile-notifications-dropdown {
+    z-index: 1000000 !important;
+}
+
+/* LAYERING: NOTIFICATIONS HIGH, BUT CHATBOT STILL HIGHER */
+#mobileNotificationBell,
+button#mobileNotificationBell,
+.mobile-notification-bell {
+    z-index: 1000000 !important;
+    position: fixed !important;
+}
+
+/* ===== Mobile Sidebar Overlay (ComSci page) ===== */
+@media (max-width: 768px) {
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45); /* grey/black semi-transparent */
+        backdrop-filter: blur(2px);
+        z-index: 900; /* below sidebar (1000) and hamburger (5000) */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+    .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    body.no-scroll {
+        overflow: hidden;
+        touch-action: none;
+    }
+}

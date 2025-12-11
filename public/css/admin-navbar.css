@@ -1,0 +1,157 @@
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #12372a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0;
+    transition: left 0.3s;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+.sidebar img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Simple role indicator */
+.simple-role-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.role-line {
+    width: 60px;
+    height: 2px;
+    margin-bottom: 8px;
+    border-radius: 1px;
+}
+
+.student-line {
+    background-color: #3b82f6;
+}
+
+.professor-line {
+    background-color: #ef4444;
+}
+
+.admin-line {
+    background-color: #8b5cf6;
+}
+
+.role-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+}
+/* Sidebar links and logout button styling */
+/* Sidebar links and logout button styling */
+.sidebar ul li a,
+.sidebar ul li .logout-btn,
+.sidebar ul li .sidebar-link {
+    display: block;
+    padding: 1rem 0 1rem 2rem;
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.sidebar ul li a:hover,
+.sidebar ul li .logout-btn:hover,
+.sidebar ul li .sidebar-link:hover {
+    background-color: #20543d;
+}
+.sidebar ul li a.active {background-color:#1d4d39; position:relative;}
+
+/* Hamburger button */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999; /* Always on top */
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #12372a;
+    cursor: pointer;
+    transition: left 0.3s, background 0.3s, color 0.3s;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -240px;
+        transition: left 0.3s;
+        width: 220px;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000 !important;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .hamburger {
+        display: block;
+    }
+    /* Hamburger stays on top and moves right when sidebar is open */
+    .sidebar.active ~ .hamburger,
+    .hamburger.active {
+        background: #12372a !important;
+        color: #ffffff !important;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        z-index: 9999;
+    }
+    body {
+        padding-left: 0 !important; /* Remove any left padding on mobile */
+    }
+    /* Remove the overlay pseudo-element */
+    .sidebar.active::after {
+        display: none;
+        content: none;
+    }
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+        z-index: 1 !important;
+        position: relative;
+    }
+    .calendar,
+    .calendar-wrapper {
+        z-index: 1 !important;
+        position: relative;
+    }
+}
+
+/* On desktop, if you have a wrapper for your main content, make sure it has: */
+@media (min-width: 768px) {
+    .main-content {
+        margin-left: 220px; /* same as sidebar width */
+        width: calc(100% - 220px);
+        transition: margin-left 0.3s;
+    }
+    .sidebar img {
+        margin-top: 30px !important; /* Adjust this value as needed */
+        margin-bottom: 30px !important; /* Optional: reduce bottom margin for better spacing */
+    }
+}

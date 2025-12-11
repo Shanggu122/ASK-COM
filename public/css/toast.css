@@ -1,0 +1,107 @@
+/* Toast notification styles - matched to student ITIS/COMSCI notification UI */
+.toast-wrapper {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 9999;
+    pointer-events: none; /* allow clicks through gaps */
+}
+
+.ascc-toast {
+    min-width: 240px;
+    max-width: 420px;
+    background: #0b3d2e; /* default for info */
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(-6px);
+    animation: toast-in 0.28s ease forwards;
+    pointer-events: auto; /* clickable */
+    position: relative;
+}
+
+.ascc-toast-success {
+    background: #4bb543;
+}
+.ascc-toast-error {
+    background: #e74c3c;
+    color: #fff;
+}
+.ascc-toast-info {
+    background: #0b3d2e;
+    color: #fff;
+}
+
+.ascc-toast.hide {
+    animation: toast-out 0.25s ease forwards;
+}
+
+.ascc-toast-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+.ascc-toast-close:hover {
+    opacity: 1;
+}
+
+@keyframes toast-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes toast-out {
+    to {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+/* Mild bump animation when reusing an existing toast (dedupe) */
+@keyframes toast-bump {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(0) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+.ascc-toast.bump {
+    animation: toast-bump 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .toast-wrapper {
+        top: 20px;
+        right: 20px;
+        left: 20px;
+    }
+    .ascc-toast {
+        width: 100%;
+        max-width: none;
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+}
