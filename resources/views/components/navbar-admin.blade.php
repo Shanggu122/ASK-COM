@@ -8,13 +8,33 @@
                 <span class="role-line admin-line"></span>
                 <span class="role-label">Admin Portal</span>
         </div>
-        <ul>
-                <li><a class="{{ str_starts_with($current,'admin-dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li><a class="{{ str_contains($current,'admin-comsci') ? 'active' : '' }}" href="{{ url('/admin-comsci') }}">Computer Science</a></li>
-                <li><a class="{{ str_contains($current,'admin-analytics') ? 'active' : '' }}" href="{{ url('/admin-analytics') }}">Analytics</a></li>
-                <li style="margin:0;padding:0;">
-                        <x-logout-link guard="admin" label="Sign Out" class="logout-btn sidebar-link" style="background:none;border:none;padding:1rem 0 1rem 2rem;width:100%;color:inherit;text-align:left;font-family:inherit;font-size:inherit;cursor:pointer;" />
-                </li>
+        <ul class="nav-links">
+            <li>
+                <a class="nav-link {{ str_starts_with($current,'admin-dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                    <i class='bx bxs-bank nav-icon'></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link {{ str_contains($current,'admin-comsci') ? 'active' : '' }}" href="{{ url('/admin-comsci') }}">
+                    <i class='bx bx-building-house nav-icon'></i>
+                    <span>Faculty</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link {{ str_contains($current,'admin-analytics') ? 'active' : '' }}" href="{{ url('/admin-analytics') }}">
+                    <i class='bx bx-bar-chart-alt-2 nav-icon'></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li>
+                <x-logout-link
+                    guard="admin"
+                    label="Sign Out"
+                    class="nav-link nav-link-logout logout-btn sidebar-link"
+                    icon="bx bx-log-out-circle"
+                />
+            </li>
         </ul>
 </div>
 <script>

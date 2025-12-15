@@ -30,14 +30,41 @@
             <span class="role-label">Professor Portal</span>
         </div>
         
-         <ul>
-          <li><a href="{{ url('/dashboard-professor') }}">Dashboard</a></li>
-          <li><a href="{{ url('/comsci-professor') }}">Faculty</a></li>
-          <li><a href="{{ url('/profile-professor') }}">Profile</a></li>
-          <li><a href="{{ url('/conlog-professor') }}">Consultation Log</a></li>
-          <li><a href="{{ url('/messages-professor') }}">Messages</a></li>
-          <li><x-logout-link guard="professor" label="Sign Out" /></li>
-        </ul>
+                <ul class="nav-links">
+                    <li>
+                        <a class="nav-link" href="{{ url('/dashboard-professor') }}">
+                            <i class='bx bxs-bank nav-icon'></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('/comsci-professor') }}">
+                            <i class='bx bx-group nav-icon'></i>
+                            <span>Faculty</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('/profile-professor') }}">
+                            <i class='bx bx-user-circle nav-icon'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('/conlog-professor') }}">
+                            <i class='bx bx-notepad nav-icon'></i>
+                            <span>Consultation Log</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('/messages-professor') }}">
+                            <i class='bx bx-envelope nav-icon'></i>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <x-logout-link guard="professor" label="Sign Out" class="nav-link nav-link-logout" icon="bx bx-log-out-circle" />
+                    </li>
+                </ul>
       </div>
 
     @if (Request::is('dashboard-professor'))

@@ -3,6 +3,9 @@
     'label' => null,
     'method' => 'GET', // could adapt later for POST logout endpoints
     'class' => 'text-red-600 hover:underline',
+    'icon' => null,
+    'iconClass' => 'nav-icon',
+    'textClass' => null,
 ])
 @php
     $routeMap = [
@@ -12,12 +15,26 @@
     ];
     $cfg = $routeMap[$guard] ?? $routeMap['web'];
     $text = $label ?? __('Logout');
+    $iconClass = $icon ? trim($iconClass ?? '') : null;
+    $textClass = trim($textClass ?? '');
+    $baseAttributes = $attributes->except('class');
+    $resolvedClass = trim($attributes->get('class') ?? $class ?? '');
 @endphp
 @if($cfg['method'] === 'GET')
-    <a href="{{ $cfg['url'] }}" {{ $attributes->merge(['class' => $class]) }} data-logout-guard="{{ $guard }}">{{ $text }}</a>
+    <a href="{{ $cfg['url'] }}" {{ $baseAttributes->merge(['class' => $resolvedClass]) }} data-logout-guard="{{ $guard }}">
+        @if($icon)
+            <i class="{{ $icon }}{{ $iconClass ? ' '.$iconClass : '' }}" aria-hidden="true"></i>
+        @endif
+        <span class="{{ $textClass }}">{{ $text }}</span>
+    </a>
 @else
-    <form action="{{ $cfg['url'] }}" method="POST" style="display:inline" {{ $attributes->merge(['class' => 'inline']) }} data-logout-guard="{{ $guard }}">
+    <form action="{{ $cfg['url'] }}" method="POST" style="display:inline" data-logout-guard="{{ $guard }}">
         @csrf
-        <button type="submit" class="{{ $class }}">{{ $text }}</button>
+        <button type="submit" {{ $baseAttributes->merge(['class' => $resolvedClass ?: 'inline']) }}>
+            @if($icon)
+                <i class="{{ $icon }}{{ $iconClass ? ' '.$iconClass : '' }}" aria-hidden="true"></i>
+            @endif
+            <span class="{{ $textClass }}">{{ $text }}</span>
+        </button>
     </form>
 @endif

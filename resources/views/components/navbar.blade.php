@@ -38,13 +38,40 @@
             @endif
         </div>
         
-        <ul>
-            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url('/comsci') }}">Faculty</a></li>
-            <li><a href="{{ url('/profile') }}">Profile</a></li>
-            <li><a href="{{ url('/conlog') }}">Consultation Log</a></li>
-            <li><a href="{{ url('/messages') }}">Messages</a></li>
-            <li><x-logout-link guard="web" label="Sign Out" /></li>
+        <ul class="nav-links">
+            <li>
+                <a class="nav-link" href="{{ url('/dashboard') }}">
+                    <i class='bx bxs-bank nav-icon'></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="{{ url('/comsci') }}">
+                    <i class='bx bx-group nav-icon'></i>
+                    <span>Faculty</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="{{ url('/profile') }}">
+                    <i class='bx bx-user-circle nav-icon'></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="{{ url('/conlog') }}">
+                    <i class='bx bx-notepad nav-icon'></i>
+                    <span>Consultation Log</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="{{ url('/messages') }}">
+                    <i class='bx bx-envelope nav-icon'></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li>
+                <x-logout-link guard="web" label="Sign Out" class="nav-link nav-link-logout" icon="bx bx-log-out-circle" />
+            </li>
         </ul>
     </div>
     <!-- Grey overlay shown when mobile sidebar is open (all student pages) -->
