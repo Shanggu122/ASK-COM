@@ -68,15 +68,38 @@
 .sidebar ul {
     list-style: none;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
-.sidebar ul li a {
-    display: block;
-    padding: 1rem 0 1rem 2rem;
+.sidebar ul li {
+    width: 100%;
+}
+.sidebar ul li a,
+.sidebar ul li .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
     color: white;
     text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    transition:
+        background-color 0.25s ease,
+        transform 0.15s ease;
 }
-.sidebar ul li a:hover {
+.sidebar ul li a:hover,
+.sidebar ul li .nav-link:hover {
     background-color: #20543d;
+    transform: translateX(2px);
+}
+.nav-icon {
+    font-size: 1.25rem;
+    min-width: 24px;
+    text-align: center;
+}
+.nav-link-logout {
+    color: #f9fafb;
 }
 
 /* Hamburger button */
